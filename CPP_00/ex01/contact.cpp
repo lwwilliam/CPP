@@ -1,5 +1,10 @@
 #include "phonebook.hpp"
 
+Contact::Contact()
+{
+	x = 0;
+}
+
 Contact::Contact(std::string f, std::string l, std::string n, std::string p, std::string s)
 {
 	this->Firstname = f;

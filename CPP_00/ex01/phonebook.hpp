@@ -2,6 +2,8 @@
 #define  PHONEBOOK_H
 
 #include <iostream>
+#include <iomanip>
+#include <sstream>
 
 class Contact
 {
@@ -21,9 +23,9 @@ class Phonebook
 	public:
 		Phonebook();
 		int	Add(void);
-		int	Search(void);
+		int	Search(Phonebook book);
 		int which_contact;
-		Contact contacts[9];
+		Contact contacts[8];
 
 };
 

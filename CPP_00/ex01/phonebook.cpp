@@ -28,27 +28,50 @@ int	Phonebook::Add(void)
 	if (empty_check == 0)
 	{
 		Contact contact(f, l, n, p, s);
-		++which_contact;
-		if (which_contact >= 3)
-			which_contact %= 3;
-		// if (which_contact <= 0 || which_contact < 8)
-		// 	which_contact++;
-		// else if (which_contact == 8)
-		// 	which_contact = 1;
+		which_contact %= 8;
 		contacts[which_contact] = contact;
-		// contacts[(which_contact)++ % 8] = contact;
-		std::cout << "Contact is added " << which_contact <<std::endl;
+		which_contact++;
+		std::cout << "Contact is added " << which_contact << std::endl;
 	}
 	else
 		std::cout << "All field must be filled!" << std::endl;
 	return(0);
 }
 
-int	Phonebook::Search(void)
+std::string	print_check(std::string &s)
 {
-	std::string input;
-	getline(std::cin, input);
-	std::cout << "SEARCH " << input << std::endl;
+	int x = s.length();
+	if (x >= 10)
+	{
+		s.resize(10);
+		s[9] = '.';
+	}
+	return(s);
+}
+
+void	print(Contact contact, int x)
+{
+	std::cout << std::right << std::setfill(' ') 
+		<< std::setw(10) << x << ".|"
+		<< std::setw(10) << print_check(contact.Firstname) << "|"
+		<< std::setw(10) << print_check(contact.Lastname) << "|"
+		<< std::setw(10) << print_check(contact.Nickname) << "|"
+		<< std::endl;
+
+}
+
+int	Phonebook::Search(Phonebook book)
+{
+	std::stringstream s;
+	int			x;
+	std::string id;
+	getline(std::cin, id);
+	s << id;
+	s >> x;
+	if (x < 1 || x > 8)
+		std::cout << "invalid index" << std::endl;
+	else
+		print(book.contacts[x - 1], x);
 	return(0);
 }
 
@@ -59,19 +82,6 @@ Phonebook::Phonebook(void)
 	which_contact = 0;
 }
 
-Contact::Contact()
-{
-	x = 0;
-}
-
-void	print(Contact contact)
-{
-		std::cout << contact.Firstname << std::endl;
-		std::cout << contact.Lastname << std::endl;
-		std::cout << contact.Nickname << std::endl;
-		std::cout << contact.Phonenumber << std::endl;
-		std::cout << contact.DarkestSecret << std::endl;
-}
 
 int main(void)
 {
@@ -84,9 +94,7 @@ int main(void)
 		if (command.compare("ADD") == 0)
 			book.Add();
 		else if (command.compare("SEARCH") == 0)
-			book.Search();
+			book.Search(book);
 	}
-	for (int x = 0; x < 3; x++)
-		print(book.contacts[x]);
 	return(0);
 }
