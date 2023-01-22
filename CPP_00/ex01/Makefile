@@ -1,8 +1,8 @@
-NAME = megaphone
+NAME = phonebook
 
-SRC = megaphone.cpp
+SRC = phonebook.cpp contact.cpp
 
-CFLAGS = -Wall -Wextra -Werror
+# CFLAGS = -Wall -Wextra -Werror
 
 all : $(NAME)
 
