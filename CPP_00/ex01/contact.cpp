@@ -1,8 +1,8 @@
 #include "phonebook.hpp"
 
-Contact::Contact()
+Contact::Contact(void)
 {
-	x = 0;
+	return;
 }
 
 Contact::Contact(std::string f, std::string l, std::string n, std::string p, std::string s)
