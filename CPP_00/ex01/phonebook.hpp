@@ -15,7 +15,7 @@ class Contact
 		std::string	Phonenumber;
 		std::string	DarkestSecret;
 		Contact(std::string f, std::string l, std::string n, std::string p, std::string s);
-		Contact();
+		Contact(void);
 };
 
 class Phonebook
