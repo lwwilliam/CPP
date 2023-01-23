@@ -2,7 +2,7 @@ NAME = phonebook
 
 SRC = phonebook.cpp contact.cpp
 
-# CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 all : $(NAME)
 
