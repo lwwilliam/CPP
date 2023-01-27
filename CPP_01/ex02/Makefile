@@ -1,6 +1,6 @@
-NAME = phonebook
+NAME = ex02
 
-SRC = phonebook.cpp contact.cpp
+SRC = main.cpp
 
 CFLAGS = -Wall -Wextra -Werror
 
