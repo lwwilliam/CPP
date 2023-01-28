@@ -1,6 +1,6 @@
-NAME = ex04
+NAME = Harl
 
-SRC = main.cpp Files.cpp
+SRC = Harl.cpp main.cpp
 
 CFLAGS = -Wall -Wextra -Werror
 
@@ -10,10 +10,6 @@ $(NAME) : $(SRC)
 	g++ -std=c++98 $(SRC) $(CFLAGS) -o $(NAME) -fsanitize=address
 
 fclean :
-	rm -f *.replace
 	rm -f $(NAME)
 
 re : fclean all
-
-test : 
-	make && ./ex04 example.txt is was
