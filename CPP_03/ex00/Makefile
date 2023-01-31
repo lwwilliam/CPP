@@ -1,6 +1,6 @@
-NAME = ex00
+NAME = claptrap
 
-SRC = main.cpp Fixed.cpp
+SRC = main.cpp ClapTrap.cpp
 
 CFLAGS = -Wall -Wextra -Werror
 
