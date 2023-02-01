@@ -1,6 +1,6 @@
-NAME = scavtrap
+NAME = fragtrap
 
-SRC = main.cpp ClapTrap.cpp ScavTrap.cpp
+SRC = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp
 
 CFLAGS = -Wall -Wextra -Werror
 
