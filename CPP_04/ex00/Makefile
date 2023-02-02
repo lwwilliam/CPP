@@ -1,6 +1,6 @@
 NAME = Animals
 
-SRC = main.cpp Animals.cpp
+SRC = main.cpp Animal.cpp WrongAnimal.cpp
 
 CFLAGS = -Wall -Wextra -Werror
 

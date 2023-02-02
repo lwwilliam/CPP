@@ -1,4 +1,4 @@
-#include "Animals.hpp"
+#include "Animal.hpp"
 
 Animal::Animal()
 {
@@ -21,7 +21,7 @@ Animal &Animal::operator = (const Animal &A)
 
 void Animal::makeSound() const
 {
-	;
+	std::cout << "makeSound is called"  << std::endl;
 }
 
 std::string Animal::getType() const
