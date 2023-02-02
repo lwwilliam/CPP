@@ -3,6 +3,9 @@
 FragTrap::FragTrap()
 {
 	std::cout << "FragTrap default constructor is called" << std::endl;
+	FragTrap::HitPoint = 100;
+	FragTrap::EnergyPoint = 100;
+	FragTrap::AttackDamage = 30;
 }
 
 FragTrap::FragTrap(std::string n)

@@ -3,6 +3,9 @@
 ClapTrap::ClapTrap()
 {
 	std::cout << "ClapTrap default Constructor is called" << std::endl;
+	HitPoint = 10;
+	EnergyPoint = 10;
+	AttackDamage = 0;
 }
 
 ClapTrap::ClapTrap(std::string n)
