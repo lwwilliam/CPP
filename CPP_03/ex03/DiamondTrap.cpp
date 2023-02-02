@@ -5,13 +5,13 @@ DiamondTrap::DiamondTrap()
 	std::cout << "DiamondTrap default constructor is called" << std::endl;
 }
 
-DiamondTrap::DiamondTrap(std::string n)
+DiamondTrap::DiamondTrap(std::string n) : ClapTrap( n ), FragTrap( n ), ScavTrap( n )
 {
 	name = n;
 	ClapTrap::name = (n +  "_clap_name");
-	FragTrap::HitPoint = 100;
-	ScavTrap::EnergyPoint = 100;
-	FragTrap::AttackDamage = 30;
+	HitPoint = FragTrap::HitPoint;
+    EnergyPoint = ScavTrap::EnergyPoint;
+    AttackDamage = FragTrap::AttackDamage;
 }
 
 DiamondTrap::DiamondTrap(const DiamondTrap &D)
@@ -49,7 +49,10 @@ void DiamondTrap::beRepaired(unsigned int amount)
 	EnergyPoint -= 1;
 }
 
-// void Diamond:: 
+void DiamondTrap::whoAmI()
+{
+	std::cout << "I am " << ClapTrap::name << " " << name << std::endl;
+}
 
 DiamondTrap::~DiamondTrap()
 {

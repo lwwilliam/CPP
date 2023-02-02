@@ -23,4 +23,5 @@ int main()
 	F.attack("ob2");
 	S.takeDamage(30);
 	S.beRepaired(5);
+	D.whoAmI();
 }
