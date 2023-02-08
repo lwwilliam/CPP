@@ -1,4 +1,4 @@
-#include "Animals.hpp"
+#include "Animal.hpp"
 
 Animal::Animal()
 {
@@ -21,7 +21,7 @@ Animal &Animal::operator = (const Animal &A)
 
 void Animal::makeSound() const
 {
-	;
+	std::cout << "makeSound is called"  << std::endl;
 }
 
 std::string Animal::getType() const
@@ -37,6 +37,7 @@ Animal::~Animal()
 Dog::Dog()
 {
 	std::cout << "Dog constructor is called" << std::endl;
+	this->B = new Brain;
 	Animal::type = "Dog";
 }
 
@@ -48,12 +49,13 @@ void Dog::makeSound() const
 Dog::~Dog()
 {
 	std::cout << "Dog detructor is called" << std::endl;
+	delete B;
 }
 
 Cat::Cat()
 {
 	std::cout << "Cat constructor is called" << std::endl;
-	Animal::type = "Cat";
+	this->B = new Brain;
 }
 
 void Cat::makeSound() const
@@ -64,4 +66,5 @@ void Cat::makeSound() const
 Cat::~Cat()
 {
 	std::cout << "Cat detructor is called" << std::endl;
+	delete B;
 }
