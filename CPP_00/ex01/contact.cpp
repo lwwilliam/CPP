@@ -13,3 +13,28 @@ Contact::Contact(std::string f, std::string l, std::string n, std::string p, std
 	this->Phonenumber = p;
 	this->DarkestSecret = s;
 }
+
+std::string Contact::GetFName()
+{
+	return(this->Firstname);
+}
+
+std::string Contact::GetLName()
+{
+	return(this->Lastname);
+}
+
+std::string Contact::GetNName()
+{
+	return(this->Nickname);
+}
+
+std::string Contact::GetPHN()
+{
+	return(this->Phonenumber);
+}
+
+std::string Contact::GetDS()
+{
+	return(this->DarkestSecret);
+}
