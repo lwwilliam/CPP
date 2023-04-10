@@ -7,14 +7,14 @@
 class AAnimal
 {
 	public:
-		AAnimal();
-		AAnimal(const AAnimal &A);
-		AAnimal &operator = (const AAnimal &A);
 		virtual void makeSound() const;
 		std::string getType() const;
 		virtual ~AAnimal();
+		AAnimal &operator = (const AAnimal &A);
 	protected:
+		AAnimal();
 		std::string type;
+		AAnimal(const AAnimal &A);
 };
 
 class Dog : public AAnimal

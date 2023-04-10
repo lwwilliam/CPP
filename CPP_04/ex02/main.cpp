@@ -20,6 +20,9 @@ int main()
 	const AAnimal* j = new Dog();
 	const AAnimal* i = new Cat();
 
+	//if give error then is correct 
+	// AAnimal* e = new AAnimal();
+
 	delete j;
 	delete i;
 
