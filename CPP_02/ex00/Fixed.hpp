@@ -7,6 +7,7 @@ class Fixed
 {
 	private:
 		int	num;
+		static const int fracbits = 8;
 	public:
 		Fixed(void); //default constructor
 		Fixed(const Fixed &F); //copy constructor
