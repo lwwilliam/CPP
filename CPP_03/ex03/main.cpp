@@ -6,21 +6,21 @@
 int main()
 {
 	std::string en = "enemy";
-	ClapTrap C("ob1");
-	ScavTrap S("ob2");
-	FragTrap F("ob3");
-	DiamondTrap D("obj4");
+	ClapTrap C("Clap");
+	ScavTrap S("Scav");
+	FragTrap F("Frag");
+	DiamondTrap D("Diam");
 
-	S.attack("ob3");
-	S.attack("obj4");
+	S.attack("Frag");
+	S.attack("Diam");
 	D.takeDamage(30);
-	D.attack("teayufrkjae");
+	D.attack(en);
 	D.beRepaired(2);
 	F.takeDamage(20);
 	F.beRepaired(5);
-	C.attack("ob2");
+	C.attack("Scav");
 	C.beRepaired(5);
-	F.attack("ob2");
+	F.attack("Scav");
 	S.takeDamage(30);
 	S.beRepaired(5);
 	D.whoAmI();
