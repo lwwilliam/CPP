@@ -3,12 +3,12 @@
 int main()
 {
 	std::string en = "enemy";
-	ScavTrap S("ob1");
-	ClapTrap C("ob2");
+	ScavTrap S("Scav");
+	ClapTrap C("Clap");
 
-	S.attack("ob2");
+	S.attack("Clap");
 	C.takeDamage(5);
-	C.attack("ob1");
+	C.attack("Scav");
 	S.guardgate();
 	C.beRepaired(2);
 }

@@ -52,7 +52,7 @@ void ClapTrap::beRepaired(unsigned int amount)
 
 ClapTrap::~ClapTrap()
 {
-	// std::cout << "End" << Name << HitPoint << " " << EnergyPoint << " " <<
-	// 	AttackDamage << std::endl;		// for end res print
+	std::cout << "End " << Name << " " << HitPoint << " " << EnergyPoint << " " <<
+		AttackDamage << std::endl;		// for end res print
 	std::cout << "Destructor is called" << std::endl;
 }

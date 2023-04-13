@@ -38,18 +38,18 @@ void ScavTrap::attack(const std::string &target)
 	EnergyPoint -= 1;
 }
 
-void ScavTrap::takeDamage(unsigned int amount)
-{
-	std::cout << "ScavTrap " << Name << " has taken " << amount << " damage." << std::endl;
-	HitPoint -= amount;
-}
+// void ScavTrap::takeDamage(unsigned int amount)
+// {
+// 	std::cout << "ScavTrap " << Name << " has taken " << amount << " damage." << std::endl;
+// 	HitPoint -= amount;
+// }
 
-void ScavTrap::beRepaired(unsigned int amount)
-{
-	std::cout << "ScavTrap " << Name << " has repaired itself, gaining " << amount << " hit points." << std::endl;
-	HitPoint += amount;
-	EnergyPoint -= 1;
-}
+// void ScavTrap::beRepaired(unsigned int amount)
+// {
+// 	std::cout << "ScavTrap " << Name << " has repaired itself, gaining " << amount << " hit points." << std::endl;
+// 	HitPoint += amount;
+// 	EnergyPoint -= 1;
+// }
 
 void ScavTrap::guardgate()
 {

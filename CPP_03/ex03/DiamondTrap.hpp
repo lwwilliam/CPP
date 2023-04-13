@@ -12,8 +12,8 @@ class DiamondTrap : public FragTrap, public ScavTrap
 		DiamondTrap(const DiamondTrap &D);
 		DiamondTrap &operator = (const DiamondTrap &D);
 		void attack(const std::string &target);
-		void takeDamage(unsigned int aount);
-		void beRepaired(unsigned int amount);
+		// void takeDamage(unsigned int aount);
+		// void beRepaired(unsigned int amount);
 		void whoAmI();
 		~DiamondTrap();
 	private:

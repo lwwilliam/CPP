@@ -41,18 +41,18 @@ void FragTrap::attack(const std::string &target)
 	EnergyPoint -= 1;
 }
 
-void FragTrap::takeDamage(unsigned int amount)
-{
-	std::cout << "FragTrap " << name << " has taken " << amount << " damage." << std::endl;
-	HitPoint -= amount;
-}
+// void FragTrap::takeDamage(unsigned int amount)
+// {
+// 	std::cout << "FragTrap " << name << " has taken " << amount << " damage." << std::endl;
+// 	HitPoint -= amount;
+// }
 
-void FragTrap::beRepaired(unsigned int amount)
-{
-	std::cout << "FragTrap " << name << " has repaired itself, gaining " << amount << " hit points." << std::endl;
-	HitPoint += amount;
-	EnergyPoint -= 1;
-}
+// void FragTrap::beRepaired(unsigned int amount)
+// {
+// 	std::cout << "FragTrap " << name << " has repaired itself, gaining " << amount << " hit points." << std::endl;
+// 	HitPoint += amount;
+// 	EnergyPoint -= 1;
+// }
 
 void FragTrap::highFivesGuys(void)
 {

@@ -37,18 +37,18 @@ void DiamondTrap::attack(const std::string &target)
 	ScavTrap::attack(target);
 }
 
-void DiamondTrap::takeDamage(unsigned int amount)
-{
-	std::cout << "DiamondTrap " << name << " has taken " << amount << " damage." << std::endl;
-	HitPoint -= amount;
-}
+// void DiamondTrap::takeDamage(unsigned int amount)
+// {
+// 	std::cout << "DiamondTrap " << name << " has taken " << amount << " damage." << std::endl;
+// 	HitPoint -= amount;
+// }
 
-void DiamondTrap::beRepaired(unsigned int amount)
-{
-	std::cout << "DiamondTrap " << name << " has repaired itself, gaining " << amount << " hit points." << std::endl;
-	HitPoint += amount;
-	EnergyPoint -= 1;
-}
+// void DiamondTrap::beRepaired(unsigned int amount)
+// {
+// 	std::cout << "DiamondTrap " << name << " has repaired itself, gaining " << amount << " hit points." << std::endl;
+// 	HitPoint += amount;
+// 	EnergyPoint -= 1;
+// }
 
 void DiamondTrap::whoAmI()
 {

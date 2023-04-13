@@ -5,16 +5,16 @@
 int main()
 {
 	std::string en = "enemy";
-	ClapTrap C("ob1");
-	ScavTrap S("ob2");
-	FragTrap F("ob3");
+	ClapTrap C("Clap");
+	ScavTrap S("Scav");
+	FragTrap F("Frag");
 
-	S.attack("ob3");
+	S.attack("Frag");
 	F.takeDamage(20);
 	F.beRepaired(5);
-	C.attack("ob2");
+	C.attack("Scav");
 	C.beRepaired(5);
-	F.attack("ob2");
+	F.attack("Scav");
 	S.takeDamage(30);
 	S.beRepaired(5);
 }
