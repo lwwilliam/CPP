@@ -17,5 +17,5 @@ int main()
 	meta->makeSound();
 	W->makeSound();
 	X->makeSound();
-return 0;
+	return 0;
 }

@@ -2,18 +2,18 @@
 
 WrongAnimal::WrongAnimal()
 {
-	std::cout << "Default constructor is called" << std::endl;
+	std::cout << "WrongAnimal Default constructor is called" << std::endl;
 }
 
 WrongAnimal::WrongAnimal(const WrongAnimal &W)
 {
-	std::cout << "Copy constructor is called" << std::endl;
+	std::cout << "WrongAnimal Copy constructor is called" << std::endl;
 	*this = W;
 }
 
 WrongAnimal &WrongAnimal::operator = (const WrongAnimal &W)
 {
-	std::cout << "Copy assignment operator called" << std::endl;
+	std::cout << "WrongAnimal Copy assignment operator called" << std::endl;
 	if (this != &W)
 		type = W.type;
 	return (*this);
@@ -31,7 +31,7 @@ std::string WrongAnimal::getType() const
 
 WrongAnimal::~WrongAnimal()
 {
-	std::cout << "Destructor is called" << std::endl;
+	std::cout << "WrongAnimal Destructor is called" << std::endl;
 }
 
 WrongCat::WrongCat()
