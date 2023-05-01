@@ -56,7 +56,7 @@ void ClapTrap::beRepaired(unsigned int amount)
 
 ClapTrap::~ClapTrap()
 {
-	std::cout << "End " << name  << " " << HitPoint << " " << EnergyPoint << " " <<
-		AttackDamage << std::endl;		// for end res print
+	// std::cout << "End " << name  << " " << HitPoint << " " << EnergyPoint << " " <<
+	// 	AttackDamage << std::endl;		// for end res print
 	std::cout << "ClapTrap destructor is called" << std::endl;
 }
