@@ -15,6 +15,10 @@ class ScavTrap : virtual public ClapTrap
 		// void takeDamage(unsigned int amount);
 		// void beRepaired(unsigned int amount);
 		~ScavTrap();
+	protected:
+		int	HitPoint;
+		int	EnergyPoint;
+		int	AttackDamage;
 };
 
 #endif

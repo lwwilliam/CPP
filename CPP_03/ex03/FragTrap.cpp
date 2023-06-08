@@ -61,5 +61,7 @@ void FragTrap::highFivesGuys(void)
 
 FragTrap::~FragTrap()
 {
+	std::cout << "End " << name  << " " << HitPoint << " " << EnergyPoint << " " <<
+	AttackDamage << std::endl;
 	std::cout << "FragTrap destructor is called" << std::endl;
 }

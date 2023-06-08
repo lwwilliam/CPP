@@ -57,6 +57,8 @@ void DiamondTrap::whoAmI()
 
 DiamondTrap::~DiamondTrap()
 {
+	std::cout << "End " << name  << " " << HitPoint << " " << EnergyPoint << " " <<
+	AttackDamage << std::endl;
 	std::cout << "DiamondTrap destructor is called" << std::endl;
 }
 

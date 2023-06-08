@@ -61,5 +61,7 @@ void ScavTrap::guardgate()
 
 ScavTrap::~ScavTrap()
 {
+	std::cout << "End " << name  << " " << HitPoint << " " << EnergyPoint << " " <<
+		AttackDamage << std::endl;
 	std::cout << "ScavTrap destructor is called" << std::endl;
 }
