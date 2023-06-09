@@ -1,24 +1,20 @@
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat(string name, int grade)
+Bureaucrat::Bureaucrat(string const name, int grade) : Name(name)
 {
-	cout << "constructor is called" << endl;
-	this->Name = name;
+	cout << "Constructor is called" << endl;
 	if (grade < 1)
 	{
-		// throw std::exception();
-		throw Bureaucrat::GradeTooLowException();
-		// grade = 150;
+		throw Bureaucrat::GradeTooHighException();
 	}
 	else if (grade > 150)
 	{
-		throw Bureaucrat::GradeTooHighException();
-		// grade = 150;
+		throw Bureaucrat::GradeTooLowException();
 	}
 	this->Grade = grade;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat &B)
+Bureaucrat::Bureaucrat(const Bureaucrat &B) : Name(B.Name)
 {
 	std::cout << "Copy constructor called" << std::endl;
 	*this = B;
@@ -29,7 +25,6 @@ Bureaucrat &Bureaucrat::operator = (const Bureaucrat &B)
 	std::cout << "Copy assignment operator called" << std::endl;
 	if (this != &B)
 	{
-		Name = B.Name;
 		Grade = B.Grade;
 	}
 	return (*this);
@@ -37,7 +32,7 @@ Bureaucrat &Bureaucrat::operator = (const Bureaucrat &B)
 
 Bureaucrat::~Bureaucrat()
 {
-	cout << "destructor is called" << endl;
+	cout << "Destructor is called" << endl;
 }
 
 string Bureaucrat::GetName()
@@ -55,4 +50,22 @@ std::ostream & operator << (std::ostream &out, const Bureaucrat &B)
 	out << B.Name;
 	out << ", bureaucrat grade " << B.Grade << endl;
 	return (out);
+}
+
+void Bureaucrat::GradeIncrement()
+{
+	this->Grade--;
+	if (this->Grade < 1)
+	{
+		throw Bureaucrat::GradeTooHighException();
+	}
+}
+
+void Bureaucrat::GradeDecremennt()
+{
+	this->Grade++;
+	if (this->Grade > 150)
+	{
+		throw Bureaucrat::GradeTooLowException();
+	}
 }

@@ -1,6 +1,6 @@
-NAME = Bureaucrat
+NAME = Form
 
-SRC = main.cpp Bureaucrat.cpp
+SRC = main.cpp Bureaucrat.cpp Form.cpp
 
 CFLAGS = -Wall -Wextra -Werror
 
