@@ -8,6 +8,25 @@ ScalarConverter::ScalarConverter(string convert)
 	cout << "double: " << ScalarConverter::doublecon(convert) << endl;
 }
 
+ScalarConverter::ScalarConverter(const ScalarConverter &S)
+{
+	std::cout << "Copy constructor called" << std::endl;
+	*this = S;
+}
+
+ScalarConverter &ScalarConverter::operator = (const ScalarConverter &S)
+{
+	std::cout << "Copy assignment operator called" << std::endl;
+	if (this != &S)
+	{
+		inchar = S.inchar;
+		inint = S.inint;
+		infloat = S.infloat;
+		indouble = S.indouble;
+	}
+	return (*this);
+}
+
 bool	ScalarConverter::onlydigit(string s)
 {
 	for (int x = 0; x < (int)s.size(); x++)
@@ -61,7 +80,7 @@ string	ScalarConverter::floatcon(string c)
 	float f = std::atof(c.c_str());
 	this->infloat = f;
 	std::ostringstream oss;
-	if (std::floor(f) == f)
+	if (std::floor(f) == f && std::isnan(f))
 		oss << f << ".0" << "f";
 	else
 		oss << f << "f";
@@ -73,11 +92,28 @@ string	ScalarConverter::doublecon(string c)
 	float f = std::atof(c.c_str());
 	this->indouble = f;
 	std::ostringstream oss;
-	if (std::floor(f) == f)
+	if (std::floor(f) == f && std::isnan(f))
 		oss << f << ".0";
 	else
 		oss << f;
 	return (oss.str());
+}
+
+char	ScalarConverter::getchar()
+{
+	return(this->inchar);
+}
+int		ScalarConverter::getint()
+{
+	return(this->inint);
+}
+float	ScalarConverter::getfloat()
+{
+	return(this->infloat);
+}
+double	ScalarConverter::getdouble()
+{
+	return(this->indouble);
 }
 
 ScalarConverter::~ScalarConverter()
