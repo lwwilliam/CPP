@@ -2,7 +2,7 @@
 
 Base * generate(void)
 {
-	int random = rand() % 3;
+	int random = std::rand() % 3;
 	if (random == 0)
 		return (new A());
 	else if (random == 1)
@@ -14,15 +14,15 @@ Base * generate(void)
 void identify(Base* p)
 {
 
-	if (dynamic_cast<A*> (p) != nullptr)
+	if (dynamic_cast<A*> (p) != NULL)
 	{
 		cout << "A" << endl;
 	}
-	else if (dynamic_cast<B*> (p) != nullptr)
+	else if (dynamic_cast<B*> (p) != NULL)
 	{
 		cout << "B" << endl;
 	}
-	else if (dynamic_cast<B*> (p) != nullptr)
+	else if (dynamic_cast<C*> (p) != NULL)
 	{
 		cout << "C" << endl;
 	}
@@ -30,29 +30,27 @@ void identify(Base* p)
 
 void identify(Base& p)
 {
-	try
+	if (dynamic_cast<A*>(&p) != NULL)
 	{
-		dynamic_cast<A&>(p);
 		std::cout << "A" << std::endl;
 	} 
-	catch (std::bad_cast&) 
+	else if (dynamic_cast<B*>(&p) != NULL)
 	{
-		try
-		{
-			dynamic_cast<B&>(p);
-			std::cout << "B" << std::endl;
-		}
-		catch (std::bad_cast&) 
-		{
-			try 
-			{
-				dynamic_cast<C&>(p);
-				std::cout << "C" << std::endl;
-			} 
-			catch (std::bad_cast&) 
-			{
-				std::cout << "Unknown type" << std::endl;
-			}
-		}
+		std::cout << "B" << std::endl;
+	} 
+	else if (dynamic_cast<C*>(&p) != NULL) 
+	{
+		std::cout << "C" << std::endl;
 	}
+}
+
+int main() 
+{
+	std::srand(static_cast<unsigned int>(std::time(NULL)));
+
+	Base* instance = generate();
+	identify(instance);
+	delete instance;
+
+	return 0;
 }
