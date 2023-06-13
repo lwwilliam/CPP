@@ -1,6 +1,6 @@
-NAME = identify
+NAME = iter
 
-SRC = Identify.cpp
+SRC = main.cpp
 
 CFLAGS = -Wall -Wextra -Werror
 
