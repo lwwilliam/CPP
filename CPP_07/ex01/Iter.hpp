@@ -4,17 +4,16 @@
 #include <iostream>
 
 template <typename T>
-void iter(T *array, int len, T (*funct)(T&))
+void iter(T *array, int len, void (*funct)(T&))
 {
 	for (int x = 0; x < len; x++)
 		funct(array[x]);
 }
 
-template <typename T>
-void printElement(T& element)
+template <typename P>
+void printElement(P arr)
 {
-    std::cout << element << " ";
+    std::cout << arr << " ";
 }
-
 
 #endif
