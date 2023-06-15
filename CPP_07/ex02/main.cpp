@@ -1,27 +1,43 @@
 #include "Array.tpp"
 
-int main() {
-	// Test default constructor
+int main() 
+{
 	Array<int> arr1;
-	cout << "arr1 size: " << arr1.size() << endl; // Output: 0
+	cout << "arr1 size: " << arr1.size() << endl;
 
-	// Test constructor with size parameter
 	Array<int> arr2(5);
-	cout << "arr2 size: " << arr2.size() << endl; // Output: 5
+	cout << "arr2 size: " << arr2.size() << endl;
 
-	// Test subscript operator
-	arr2[0] = 10;
-	arr2[1] = 20;
-	arr2[2] = 30;
-	cout << "arr2[0]: " << arr2[0] << endl; // Output: 10
-	cout << "arr2[1]: " << arr2[1] << endl; // Output: 20
-	cout << "arr2[2]: " << arr2[2] << endl; // Output: 30
+	arr2[0] = 69;
+	arr2[1] = 70;
+	arr2[2] = 71;
+	cout << "arr2[0]: " << arr2[0] << endl;
+	cout << "arr2[1]: " << arr2[1] << endl;
+	cout << "arr2[2]: " << arr2[2] << endl;
 
-	// Test out of bounds exception
-	try {
-		cout << "arr2[5]: " << arr2[5] << endl; // Throws std::out_of_range exception
-	} catch (const std::exception& e) {
-		cout << "Exception: " << e.what() << endl; // Output: Array index out of range
+	try
+	{
+		cout << "arr2[5]: " << arr2[5] << endl;
+	} 
+	catch (const std::exception& e)
+	{
+		cout << "Exception: " << e.what() << endl;
+	}
+
+	Array<int> cpy = arr2;
+	cout << "arr2 size: " << cpy.size() << endl;
+
+	cout << "cpy[0]: " << cpy[0] << endl;
+	cout << "cpy[1]: " << cpy[1] << endl;
+	cout << "cpy[2]: " << cpy[2] << endl;
+
+	try
+	{
+		cout << "cpy[5]: " << cpy[5] << endl;
+	} 
+	catch (const std::exception& e)
+	{
+		cout << "Exception: " << e.what() << endl;
 	}
 	return 0;
 }
