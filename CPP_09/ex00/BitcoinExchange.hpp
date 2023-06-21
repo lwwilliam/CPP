@@ -6,6 +6,7 @@
 #include <map>
 #include <sstream>
 #include <string>
+#include <cstdlib>
 
 using std::cout;
 using std::endl;
@@ -17,7 +18,14 @@ private:
 	std::map<string, double> data;
 
 public:
-	BitcoinExchange(/* args */);
+	BitcoinExchange(string filename);
 	~BitcoinExchange();
 	void openFile();
+	class OpenFail : public std::exception
+	{
+		virtual const char *what() const throw()
+		{
+			return "Unable to open file";
+		}
+	};
 };
