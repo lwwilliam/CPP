@@ -3,7 +3,6 @@
 RobotomyRequestForm::RobotomyRequestForm() : AForm("RobotomyRequestForm", 72, 45)
 {
 	cout << "Robotomy Constructor called" << endl;
-	
 }
 
 RobotomyRequestForm::RobotomyRequestForm(string Target) : AForm("RobotomyRequestForm", 72, 45)
@@ -19,10 +18,10 @@ RobotomyRequestForm::~RobotomyRequestForm()
 
 string RobotomyRequestForm::GetTarget()
 {
-	return(this->Target);
+	return (this->Target);
 }
 
-void RobotomyRequestForm::execute(Bureaucrat const & executor) const
+void RobotomyRequestForm::execute(Bureaucrat const &executor) const
 {
 	if (this->GetSign() == 0)
 	{
@@ -34,12 +33,9 @@ void RobotomyRequestForm::execute(Bureaucrat const & executor) const
 	}
 	cout << "zzzzzrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr, ";
 	cout << "robotomy success rate is 50%!" << endl;
+	std::srand(time(NULL));
 	if (std::rand() % 2 == 1)
 		cout << this->Target << " has beem robotomized." << endl;
 	else
 		cout << this->Target << " robotomy failed." << endl;
-
 }
-
-
-
