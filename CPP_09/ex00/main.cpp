@@ -5,7 +5,7 @@ int main()
 	try
 	{
 		BitcoinExchange B("input.txt");
-		B.openFile();
+		// B.openFile();
 	}
 	catch (const std::exception &e)
 	{
