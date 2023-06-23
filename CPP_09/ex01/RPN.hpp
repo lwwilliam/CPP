@@ -18,6 +18,8 @@ private:
 
 public:
 	RPN(string &exp);
+	RPN(const RPN &R);
+	RPN &operator=(const RPN &R);
 	void plus(int a, int b);
 	void minus(int a, int b);
 	void multiply(int a, int b);

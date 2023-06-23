@@ -81,6 +81,22 @@ RPN::RPN(string &exp)
 	cout << stack.top() << endl;
 }
 
+RPN::RPN(const RPN &R)
+{
+	cout << "Copy constructor called" << endl;
+	*this = R;
+}
+
+RPN &RPN::operator=(const RPN &R)
+{
+	cout << "Copy assignment operator called" << endl;
+	if (this != &R)
+	{
+		this->stack = R.stack;
+	}
+	return (*this);
+}
+
 RPN::~RPN()
 {
 }
