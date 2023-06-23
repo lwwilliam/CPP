@@ -14,7 +14,7 @@ ScalarConverter::ScalarConverter(const ScalarConverter &S)
 	*this = S;
 }
 
-ScalarConverter &ScalarConverter::operator = (const ScalarConverter &S)
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &S)
 {
 	std::cout << "Copy assignment operator called" << std::endl;
 	if (this != &S)
@@ -27,97 +27,97 @@ ScalarConverter &ScalarConverter::operator = (const ScalarConverter &S)
 	return (*this);
 }
 
-bool	ScalarConverter::onlydigit(string s)
+bool ScalarConverter::onlydigit(string s)
 {
 	for (int x = 0; x < (int)s.size(); x++)
-		if(isdigit(s[x]))
-			return(1);
+		if (isdigit(s[x]))
+			return (1);
 	return (0);
 }
 
-string	ScalarConverter::charcon(string c)
+string ScalarConverter::charcon(string c)
 {
 	long num;
 	stringstream ss(c);
 
 	ss >> num;
 	if (!onlydigit(c))
-		return("impossible to convert");
+		return ("impossible to convert");
 	else if (num > 127 || num < 32)
-		return("impossible to print");
+		return ("impossible to print");
 	else if (!isprint(num))
-		return("Non displayable");
+		return ("Non displayable");
 	else
 	{
 		this->inchar = (char)num;
 		std::ostringstream oss;
 		oss << "'" << static_cast<char>(num) << "'";
-		return(oss.str());
+		return (oss.str());
 	}
 }
 
-string	ScalarConverter::intcon(string c)
+string ScalarConverter::intcon(string c)
 {
 	long num;
 	stringstream ss(c);
 
 	ss >> num;
 	if (!onlydigit(c))
-		return("impossible");
+		return ("impossible");
 	else if (num > 2147483647 || num < -2147483648)
-		return("impossible");
+		return ("impossible");
 	else
 	{
 		std::ostringstream oss;
 		oss << num;
 		this->inint = num;
-		return(oss.str());
+		return (oss.str());
 	}
 }
 
-string	ScalarConverter::floatcon(string c)
+string ScalarConverter::floatcon(string c)
 {
 	float f = std::atof(c.c_str());
 	this->infloat = f;
 	std::ostringstream oss;
-	if (std::floor(f) == f && std::isnan(f))
-		oss << f << ".0" << "f";
+	if (std::floor(f) == f && !std::isnan(f))
+		oss << f << ".0"
+			<< "f";
 	else
 		oss << f << "f";
 	return (oss.str());
 }
 
-string	ScalarConverter::doublecon(string c)
+string ScalarConverter::doublecon(string c)
 {
 	float f = std::atof(c.c_str());
 	this->indouble = f;
 	std::ostringstream oss;
-	if (std::floor(f) == f && std::isnan(f))
+	if (std::floor(f) == f && !std::isnan(f))
 		oss << f << ".0";
 	else
 		oss << f;
 	return (oss.str());
 }
 
-char	ScalarConverter::getchar()
+char ScalarConverter::getchar()
 {
-	return(this->inchar);
+	return (this->inchar);
 }
-int		ScalarConverter::getint()
+int ScalarConverter::getint()
 {
-	return(this->inint);
+	return (this->inint);
 }
-float	ScalarConverter::getfloat()
+float ScalarConverter::getfloat()
 {
-	return(this->infloat);
+	return (this->infloat);
 }
-double	ScalarConverter::getdouble()
+double ScalarConverter::getdouble()
 {
-	return(this->indouble);
+	return (this->indouble);
 }
 
 ScalarConverter::~ScalarConverter()
 {
 	// cout << "Scalar Destructing" << endl;
 }
-
