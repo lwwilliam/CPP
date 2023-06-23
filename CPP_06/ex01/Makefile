@@ -1,6 +1,6 @@
 NAME = serialize
 
-SRC = Serialization.cpp
+SRC = Serialization.cpp main.cpp
 
 CFLAGS = -Wall -Wextra -Werror
 

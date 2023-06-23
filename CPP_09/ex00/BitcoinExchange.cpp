@@ -28,6 +28,22 @@ string trimTrailingSpaces(string str)
 	return (trimmed);
 }
 
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &B)
+{
+	cout << "Copy constructor called" << endl;
+	*this = B;
+}
+
+BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &B)
+{
+	cout << "Copy assignment operator called" << endl;
+	if (this != &B)
+	{
+		this->data = B.data;
+	}
+	return (*this);
+}
+
 BitcoinExchange::BitcoinExchange(string filename)
 {
 	BitcoinExchange::openFile();
@@ -60,7 +76,7 @@ BitcoinExchange::BitcoinExchange(string filename)
 			}
 			else
 			{
-				cout << "Key " << date << " not found in the map." << endl;
+				cout << "Key " << date << "not found in the map." << endl;
 			}
 			if (value < 0)
 				cout << "Error: not a positive number." << endl;

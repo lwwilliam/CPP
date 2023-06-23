@@ -19,6 +19,8 @@ private:
 
 public:
 	BitcoinExchange(string filename);
+	BitcoinExchange(const BitcoinExchange &B);
+	BitcoinExchange &operator=(const BitcoinExchange &B);
 	~BitcoinExchange();
 	void openFile();
 	class OpenFail : public std::exception

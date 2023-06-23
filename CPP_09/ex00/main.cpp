@@ -1,14 +1,19 @@
 #include "BitcoinExchange.hpp"
 
-int main()
+int main(int ac, char **av)
 {
-	try
+	if (ac == 2)
 	{
-		BitcoinExchange B("input.txt");
-		// B.openFile();
+		try
+		{
+			BitcoinExchange B(av[1]);
+			// B.openFile();
+		}
+		catch (const std::exception &e)
+		{
+			std::cerr << e.what() << '\n';
+		}
 	}
-	catch (const std::exception &e)
-	{
-		std::cerr << e.what() << '\n';
-	}
+	else
+		cout << "invalid arguments\n ./btc <filename>" << endl;
 }
