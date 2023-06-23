@@ -80,7 +80,7 @@ string ScalarConverter::floatcon(string c)
 	float f = std::atof(c.c_str());
 	this->infloat = f;
 	std::ostringstream oss;
-	if (std::floor(f) == f && !std::isnan(f))
+	if (std::floor(f) == f && !std::isnan(f) && !std::isinf(f))
 		oss << f << ".0"
 			<< "f";
 	else
@@ -93,7 +93,7 @@ string ScalarConverter::doublecon(string c)
 	float f = std::atof(c.c_str());
 	this->indouble = f;
 	std::ostringstream oss;
-	if (std::floor(f) == f && !std::isnan(f))
+	if (std::floor(f) == f && !std::isnan(f) && !std::isinf(f))
 		oss << f << ".0";
 	else
 		oss << f;
