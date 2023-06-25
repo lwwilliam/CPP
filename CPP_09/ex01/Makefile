@@ -1,6 +1,6 @@
-NAME = PmergeMe
+NAME = RPN
 
-SRC = main.cpp PmergeMe.cpp
+SRC = main.cpp RPN.cpp
 
 CFLAGS = -Wall -Wextra -Werror
 

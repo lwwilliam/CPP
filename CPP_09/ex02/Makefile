@@ -1,8 +1,8 @@
-NAME = RPN
+NAME = PmergeMe
 
-SRC = main.cpp RPN.cpp
+SRC = main.cpp PmergeMe.cpp
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 
 all : $(NAME)
 
