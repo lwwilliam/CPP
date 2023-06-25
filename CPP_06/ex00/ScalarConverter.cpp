@@ -49,7 +49,7 @@ string ScalarConverter::charcon(string c)
 		return ("Non displayable");
 	else
 	{
-		this->inchar = (char)num;
+		this->inchar = static_cast<char>(num);
 		std::ostringstream oss;
 		oss << "'" << static_cast<char>(num) << "'";
 		return (oss.str());
@@ -70,7 +70,7 @@ string ScalarConverter::intcon(string c)
 	{
 		std::ostringstream oss;
 		oss << num;
-		this->inint = num;
+		this->inint = static_cast<int>(num);
 		return (oss.str());
 	}
 }
@@ -78,7 +78,7 @@ string ScalarConverter::intcon(string c)
 string ScalarConverter::floatcon(string c)
 {
 	float f = std::atof(c.c_str());
-	this->infloat = f;
+	this->infloat = static_cast<float>(f);
 	std::ostringstream oss;
 	if (std::floor(f) == f && !std::isnan(f) && !std::isinf(f))
 		oss << f << ".0"
@@ -91,7 +91,7 @@ string ScalarConverter::floatcon(string c)
 string ScalarConverter::doublecon(string c)
 {
 	float f = std::atof(c.c_str());
-	this->indouble = f;
+	this->indouble = static_cast<float>(f);
 	std::ostringstream oss;
 	if (std::floor(f) == f && !std::isnan(f) && !std::isinf(f))
 		oss << f << ".0";
