@@ -21,10 +21,12 @@ PmergeMe::PmergeMe(string &arr)
 		}
 		else
 		{
-			cout << num << endl;
+			num_arr.push_back(std::atoi(num.c_str()));
 			num.clear();
 		}
 	}
+	for (std::vector<int>::iterator i = num_arr.begin(); i != num_arr.end(); ++i)
+		cout << *i << " ";
 }
 
 PmergeMe::~PmergeMe()
