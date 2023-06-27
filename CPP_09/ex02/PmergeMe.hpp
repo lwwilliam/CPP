@@ -26,4 +26,18 @@ public:
 			return "Error!";
 		}
 	};
+	class Duplicate : public std::exception
+	{
+		virtual const char *what() const throw()
+		{
+			return "Error Duplicated number is found!";
+		}
+	};
+	class Negative : public std::exception
+	{
+		virtual const char *what() const throw()
+		{
+			return "Error Negative number is found!";
+		}
+	};
 };
