@@ -15,5 +15,5 @@ int main(int ac, char **av)
 		}
 	}
 	else
-		cout << "Invalid argements : (./RPN <num array>)" << endl;
+		cout << "Invalid argements : (./PmergeMe <num array>)" << endl;
 }
