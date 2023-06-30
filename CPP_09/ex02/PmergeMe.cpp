@@ -72,7 +72,7 @@ void insertionSort(vector< std::pair<int, int> > &pairs, int n)
 	if (n <= 1)
 		return;
 
-	insertionSort(pairs, n-1);
+	insertionSort(pairs, n - 1);
 
 	std::pair<int, int> last = pairs[n - 1];
 	int j = n - 2;
@@ -85,26 +85,70 @@ void insertionSort(vector< std::pair<int, int> > &pairs, int n)
 	pairs[j + 1] = last;
 }
 
+void insertionSort(std::vector<int>& arr, int n)
+{
+	if (n <= 1)
+		return;
+
+	insertionSort(arr, n - 1);
+
+	int last = arr[n - 1];
+	int j = n - 2;
+
+	while (j >= 0 && arr[j] > last)
+	{
+		arr[j + 1] = arr[j];
+		j--;
+	}
+
+	arr[j + 1] = last;
+}
+
+void split_chain(vector< std::pair<int, int> > &p, vector<int> &S, vector<int> &pend)
+{
+	for(int i = 0; i < p.size(); i++)
+	{
+		pend.push_back(p[i].first);
+		S.push_back(p[i].second);
+	}
+	// cout << pend.front() << endl;
+	S.push_back(pend.front());
+	std::rotate(S.rbegin(), S.rbegin() + 1, S.rend());
+	std::reverse(pend.begin(), pend.end());
+	pend.pop_back();
+	std::reverse(pend.begin(), pend.end());
+}
+
 void PmergeMe::algo()
 {
 	int last, f, s = 0;
+	bool iseven = true;
 	std::pair<int, int> P1;
 	vector< std::pair<int, int> > pairs;
+	vector<int> large_chain;
+	vector<int> small_chain;
 
 	if (num_arr.size() % 2 == 1)
 	{
 		last = num_arr.back();
+		iseven = false;
 		num_arr.pop_back();
 	}
 	pairs = insert(num_arr);
 	cout << pairs.size() << endl;
 	insertionSort(pairs, pairs.size());
+	split_chain(pairs, large_chain, small_chain);
 	for(int i = 0; i < pairs.size(); i++)
 	{
 		cout << "(" << pairs[i].first << "," << pairs[i].second << ")" << " ";
 	}
+	cout << endl << "p: ";
+	for (vector<int>::iterator i = small_chain.begin(); i != small_chain.end(); ++i)
+		cout << *i << " ";
+	cout << endl << "S: ";
+	for (vector<int>::iterator i = large_chain.begin(); i != large_chain.end(); ++i)
+		cout << *i << " ";
 	cout << endl;
-
 }
 
 PmergeMe::PmergeMe(string &arr)
