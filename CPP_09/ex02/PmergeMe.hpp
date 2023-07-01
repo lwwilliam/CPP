@@ -6,6 +6,7 @@
 #include <string>
 #include <cstdlib>
 #include <vector>
+#include <algorithm>
 #include <sys/time.h>
 
 using std::cout;

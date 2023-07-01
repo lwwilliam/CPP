@@ -104,6 +104,21 @@ void insertionSort(std::vector<int>& arr, int n)
 	arr[j + 1] = last;
 }
 
+int Jacobsthal(int n)
+{
+	if (n <= 0)
+		return (0);
+	int J_num[n + 1];
+
+	J_num[0] = 0;
+	J_num[1] = 1;
+
+	for (int i = 2; i <= n; i++)
+		J_num[i] = J_num[i - 1] + 2 * J_num[i - 2];
+
+	return (J_num[n]);
+}
+
 void split_chain(vector< std::pair<int, int> > &p, vector<int> &S, vector<int> &pend)
 {
 	for(int i = 0; i < p.size(); i++)
@@ -112,11 +127,25 @@ void split_chain(vector< std::pair<int, int> > &p, vector<int> &S, vector<int> &
 		S.push_back(p[i].second);
 	}
 	// cout << pend.front() << endl;
-	S.push_back(pend.front());
-	std::rotate(S.rbegin(), S.rbegin() + 1, S.rend());
-	std::reverse(pend.begin(), pend.end());
-	pend.pop_back();
-	std::reverse(pend.begin(), pend.end());
+	S.insert(S.begin(), pend.front());
+	if (!pend.empty())
+	{
+		pend.erase(pend.begin());
+	}
+	int pend_size = pend.size();
+	for (int x = 0; x < pend_size; x++)
+	{
+		int J_num = Jacobsthal(x);
+		S.insert(S.begin() + J_num, pend.front());
+		pend.erase(pend.begin());
+	}
+	cout << endl << "p: ";
+	for (vector<int>::iterator i = pend.begin(); i != pend.end(); ++i)
+		cout << *i << " ";
+	cout << endl << "S: ";
+	for (vector<int>::iterator i = S.begin(); i != S.end(); ++i)
+		cout << *i << " ";
+	cout << endl;
 }
 
 void PmergeMe::algo()
@@ -137,10 +166,21 @@ void PmergeMe::algo()
 	pairs = insert(num_arr);
 	cout << pairs.size() << endl;
 	insertionSort(pairs, pairs.size());
-	split_chain(pairs, large_chain, small_chain);
 	for(int i = 0; i < pairs.size(); i++)
 	{
 		cout << "(" << pairs[i].first << "," << pairs[i].second << ")" << " ";
+	}
+	cout << endl;
+	split_chain(pairs, large_chain, small_chain);
+	if (iseven == false)
+	{
+		vector<int>::iterator i = lower_bound(large_chain.begin(), large_chain.end(), last);
+		cout << "closest " << (i - large_chain.begin()) << endl;
+		if (i == large_chain.end())
+			large_chain.push_back(last);
+		else
+			large_chain.insert(large_chain.begin() + (i - large_chain.begin()), last);
+		cout << last << endl;
 	}
 	cout << endl << "p: ";
 	for (vector<int>::iterator i = small_chain.begin(); i != small_chain.end(); ++i)
