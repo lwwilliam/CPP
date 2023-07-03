@@ -1,16 +1,21 @@
 #include "PmergeMe.hpp"
 
-void check_dup(vector<int> vec)
+template <typename T>
+void check_dup(T vec)
 {
-	vector<int>::iterator it;
-	vector<int>::iterator it2;
+	typename T::iterator it;
+	typename T::iterator it2;
 	for (it = vec.begin(); it != vec.end(); ++it)
-		for (it2 = it + 1; it2 != vec.end(); it2++)
-			if (*it == *it2)
+	{
+		for (it2 = it; it2 != vec.end(); it2++)
+		{
+			if (*it == *it2 && it != it2)
 				throw PmergeMe::Duplicate();
+		}
+	}
 }
 
-long long timestamp(void)
+double timestamp(void)
 {
 	struct timeval time;
 
@@ -19,16 +24,16 @@ long long timestamp(void)
 }
 
 template <typename T>
-vector<T> splitToVector(const string &s, char del)
+T splitToSTL(const string &s, char del)
 {
 	std::stringstream ss(s);
 	string word;
-	vector<T> vec;
+	T vec;
 
 	while (std::getline(ss, word, del))
 	{
 		std::istringstream iss(word);
-		T value;
+		int value;
 		if (iss >> value)
 		{
 			if (value < 0)
@@ -42,11 +47,12 @@ vector<T> splitToVector(const string &s, char del)
 	return (vec);
 }
 
-vector< std::pair<int, int> > insert(vector<int> arr)
+template <typename V, typename T>
+V insert(T arr)
 {
 	int f, s = 0;
-	vector< std::pair<int, int> > pair_arr;
-	for (vector<int>::iterator i = arr.begin(); i != arr.end(); ++i)
+	V pair_arr;
+	for (typename T::iterator i = arr.begin(); i != arr.end(); ++i)
 	{
 		std::pair<int, int> pair1;
 		f = *i;
@@ -67,42 +73,52 @@ vector< std::pair<int, int> > insert(vector<int> arr)
 	return (pair_arr);
 }
 
-void insertionSort(vector< std::pair<int, int> > &pairs, int n)
+
+template <typename T>
+void insertionSort(T& pairs, int n)
 {
 	if (n <= 1)
 		return;
+
+	typename T::iterator iter = pairs.begin();
+	std::advance(iter, n - 1); // Move the iterator to the last element
+
+	typename T::value_type last = *iter;
+
+	typename T::iterator j = iter;
+	--j;
+
+	while (j != pairs.begin() && last.second < (*j).second) {
+		*std::next(j) = *j;
+		--j;
+	}
+
+	if (last.second < (*j).second)
+		*std::next(j) = *j;
+
+	*std::next(j) = last;
 
 	insertionSort(pairs, n - 1);
-
-	std::pair<int, int> last = pairs[n - 1];
-	int j = n - 2;
-
-	while (j >= 0 && pairs[j].second > last.second)
-	{
-		pairs[j + 1] = pairs[j];
-		j--;
-	}
-	pairs[j + 1] = last;
 }
 
-void insertionSort(std::vector<int>& arr, int n)
-{
-	if (n <= 1)
-		return;
+// void insertionSort(std::vector<int>& arr, int n)
+// {
+// 	if (n <= 1)
+// 		return;
 
-	insertionSort(arr, n - 1);
+// 	insertionSort(arr, n - 1);
 
-	int last = arr[n - 1];
-	int j = n - 2;
+// 	int last = arr[n - 1];
+// 	int j = n - 2;
 
-	while (j >= 0 && arr[j] > last)
-	{
-		arr[j + 1] = arr[j];
-		j--;
-	}
+// 	while (j >= 0 && arr[j] > last)
+// 	{
+// 		arr[j + 1] = arr[j];
+// 		j--;
+// 	}
 
-	arr[j + 1] = last;
-}
+// 	arr[j + 1] = last;
+// }
 
 int Jacobsthal(int n)
 {
@@ -119,33 +135,56 @@ int Jacobsthal(int n)
 	return (J_num[n]);
 }
 
-void split_chain(vector< std::pair<int, int> > &p, vector<int> &S, vector<int> &pend)
+template <typename T>
+void Jacob(T &S, T &pend)
 {
+	T tmp_pend;
+	int pend_size = pend.size();
+	// cout << endl << "pend: ";
+	// for (typename T::iterator i = pend.begin(); i != pend.end(); ++i)
+	// 	cout << *i << " ";
+	// cout << endl << "S: ";
+	// for (typename T::iterator i = S.begin(); i != S.end(); ++i)
+	// 	cout << *i << " ";
+	// cout << endl;
+	for (int x = 2; x < pend_size; x++)
+	{
+		int J_num = Jacobsthal(x);
+		if (J_num > pend_size)
+			break;
+		tmp_pend.push_back(pend.at(J_num - 1));
+		typename T::iterator i = lower_bound(S.begin(), S.end(), pend.at(J_num - 1));
+		S.insert(S.begin() + (i - S.begin()), pend.at(J_num - 1));
+		pend.at(J_num - 1) = -1;
+	}
+	for (int x = 0; x < pend_size; x++)
+	{
+		if (pend.at(x) != -1)
+		{
+			typename T::iterator i = lower_bound(S.begin(), S.end(), pend.at(x));
+			S.insert(S.begin() + (i - S.begin()), pend.at(x));
+			tmp_pend.push_back(pend.at(x));
+		}
+	}
+	pend.clear();
+	pend = tmp_pend;
+}
+
+template <typename P, typename C>
+void split_chain(P &p, C &S, C &pend)
+{
+	C tmp_pend;
 	for(int i = 0; i < p.size(); i++)
 	{
 		pend.push_back(p[i].first);
 		S.push_back(p[i].second);
 	}
-	// cout << pend.front() << endl;
 	S.insert(S.begin(), pend.front());
-	if (!pend.empty())
+	if (!pend.empty())	
 	{
 		pend.erase(pend.begin());
 	}
-	int pend_size = pend.size();
-	for (int x = 0; x < pend_size; x++)
-	{
-		int J_num = Jacobsthal(x);
-		S.insert(S.begin() + J_num, pend.front());
-		pend.erase(pend.begin());
-	}
-	cout << endl << "p: ";
-	for (vector<int>::iterator i = pend.begin(); i != pend.end(); ++i)
-		cout << *i << " ";
-	cout << endl << "S: ";
-	for (vector<int>::iterator i = S.begin(); i != S.end(); ++i)
-		cout << *i << " ";
-	cout << endl;
+	Jacob<C>(S, pend);
 }
 
 void PmergeMe::algo()
@@ -163,54 +202,98 @@ void PmergeMe::algo()
 		iseven = false;
 		num_arr.pop_back();
 	}
-	pairs = insert(num_arr);
-	cout << pairs.size() << endl;
-	insertionSort(pairs, pairs.size());
-	for(int i = 0; i < pairs.size(); i++)
-	{
-		cout << "(" << pairs[i].first << "," << pairs[i].second << ")" << " ";
-	}
-	cout << endl;
-	split_chain(pairs, large_chain, small_chain);
+	pairs = insert<vector< std::pair<int, int> >, vector<int> >(num_arr);
+	insertionSort<vector< std::pair<int, int> > >(pairs, pairs.size());
+	// for(int i = 0; i < pairs.size(); i++)
+	// {
+	// 	cout << "(" << pairs[i].first << "," << pairs[i].second << ")" << " ";
+	// }
+	// cout << endl;
+	split_chain<vector< std::pair<int, int> >, vector<int> >(pairs, large_chain, small_chain);
 	if (iseven == false)
 	{
 		vector<int>::iterator i = lower_bound(large_chain.begin(), large_chain.end(), last);
-		cout << "closest " << (i - large_chain.begin()) << endl;
 		if (i == large_chain.end())
 			large_chain.push_back(last);
 		else
 			large_chain.insert(large_chain.begin() + (i - large_chain.begin()), last);
-		cout << last << endl;
 	}
-	cout << endl << "p: ";
-	for (vector<int>::iterator i = small_chain.begin(); i != small_chain.end(); ++i)
-		cout << *i << " ";
-	cout << endl << "S: ";
-	for (vector<int>::iterator i = large_chain.begin(); i != large_chain.end(); ++i)
-		cout << *i << " ";
-	cout << endl;
+	num_arr.clear();
+	num_arr = large_chain;
+}
+
+void PmergeMe::algo_list()
+{
+	int last, f, s = 0;
+	bool iseven = true;
+	std::pair<int, int> P1;
+	list< std::pair<int, int> > pairs;
+	list<int> large_chain;
+	list<int> small_chain;
+
+	if (num_arr_list.size() % 2 == 1)
+	{
+		last = num_arr_list.back();
+		iseven = false;
+		num_arr_list.pop_back();
+	}
+	pairs = insert<list< std::pair<int, int> >, list<int> >(num_arr_list);
+	insertionSort<list< std::pair<int, int> > >(pairs, pairs.size());
+	// for(int i = 0; i < pairs.size(); i++)
+	// {
+	// 	cout << "(" << pairs[i].first << "," << pairs[i].second << ")" << " ";
+	// }
+	// cout << endl;
+	// split_chain<list< std::pair<int, int> >, list<int> >(pairs, large_chain, small_chain);
+	if (iseven == false)
+	{
+		list<int>::iterator i = lower_bound(large_chain.begin(), large_chain.end(), last);
+		if (i == large_chain.end())
+			large_chain.push_back(last);
+		// else
+			// large_chain.insert(large_chain.begin() + (i - large_chain.begin()), last);
+	}
+	num_arr_list.clear();
+	num_arr_list = large_chain;
 }
 
 PmergeMe::PmergeMe(string &arr)
 {
-	long long start, end;
+	double start, start_list, end, end_list;
 	start = timestamp();
-	string num;
-	num_arr = splitToVector<int>(arr, ' ');
-	check_dup(num_arr);
+	num_arr = splitToSTL< vector<int> >(arr, ' ');
+	check_dup< vector<int> >(num_arr);
+	cout << "Before :  ";
 	for (vector<int>::iterator i = num_arr.begin(); i != num_arr.end(); ++i)
 		cout << *i << " ";
 	cout << endl;
 	algo();
-	// cout << num_arr.size() << endl;
-	// sort(num_arr.begin(), num_arr.end());
-	cout << endl
-		 << endl;
+	cout << "After :   ";
 	for (vector<int>::iterator i = num_arr.begin(); i != num_arr.end(); ++i)
 		cout << *i << " ";
 	cout << endl;
 	end = timestamp();
-	cout << "time taken " << end - start << " usecond." << endl;
+
+	start_list = timestamp();
+	num_arr_list = splitToSTL< list<int> >(arr, ' ');
+	check_dup< list<int> >(num_arr_list);
+	cout << "Before :  ";
+	for (list<int>::iterator i = num_arr_list.begin(); i != num_arr_list.end(); ++i)
+		cout << *i << " ";
+	cout << endl;
+	algo_list();
+	cout << "After :   ";
+	for (list<int>::iterator i = num_arr_list.begin(); i != num_arr_list.end(); ++i)
+		cout << *i << " ";
+	cout << endl;
+	end_list = timestamp();
+
+	cout << "Time to process a range of " << num_arr.size() << " element with std::vector : "<< end - start << " us" << endl;
+	// cout << "Time to process a range of " << num_arr_list.size() << " element with std::list : "<< end_list - start_list << " us" << endl;
+	if (std::is_sorted(num_arr.begin(), num_arr.end()))
+		cout << "Vector is sorted" << endl;
+	else
+		cout << "Vector is not sorted" << endl;
 }
 
 PmergeMe::~PmergeMe()
