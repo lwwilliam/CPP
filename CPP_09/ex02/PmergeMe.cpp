@@ -74,51 +74,47 @@ V insert(T arr)
 }
 
 
-template <typename T>
-void insertionSort(T& pairs, int n)
+void insertionSort(vector< std::pair<int, int> > &pairs, int n)
 {
 	if (n <= 1)
 		return;
 
-	typename T::iterator iter = pairs.begin();
-	std::advance(iter, n - 1); // Move the iterator to the last element
-
-	typename T::value_type last = *iter;
-
-	typename T::iterator j = iter;
-	--j;
-
-	while (j != pairs.begin() && last.second < (*j).second) {
-		*std::next(j) = *j;
-		--j;
-	}
-
-	if (last.second < (*j).second)
-		*std::next(j) = *j;
-
-	*std::next(j) = last;
-
 	insertionSort(pairs, n - 1);
+
+	std::pair<int, int> last = pairs[n - 1];
+	int j = n - 2;
+
+	while (j >= 0 && pairs[j].second > last.second)
+	{
+		pairs[j + 1] = pairs[j];
+		j--;
+	}
+	pairs[j + 1] = last;
 }
 
-// void insertionSort(std::vector<int>& arr, int n)
-// {
-// 	if (n <= 1)
-// 		return;
+void insertionSort(list<std::pair<int, int> >& pairs, int n)
+{
+	list<std::pair<int, int> >::iterator current = pairs.begin();
+	list<std::pair<int, int> >::iterator sortedEnd = pairs.begin();
 
-// 	insertionSort(arr, n - 1);
+	for (int i = 0; i < n; ++i)
+	{
+		std::pair<int, int> value = *current;
+		list<std::pair<int, int> >::iterator insertPos = pairs.begin();
 
-// 	int last = arr[n - 1];
-// 	int j = n - 2;
+		while (insertPos != current && insertPos->second < value.second)
+			++insertPos;
 
-// 	while (j >= 0 && arr[j] > last)
-// 	{
-// 		arr[j + 1] = arr[j];
-// 		j--;
-// 	}
-
-// 	arr[j + 1] = last;
-// }
+		if (insertPos != current)
+		{
+			pairs.erase(current);
+			pairs.insert(insertPos, value);
+			current = sortedEnd;
+		}
+		sortedEnd = current;
+		++current;
+	}
+}
 
 int Jacobsthal(int n)
 {
@@ -135,25 +131,17 @@ int Jacobsthal(int n)
 	return (J_num[n]);
 }
 
-template <typename T>
-void Jacob(T &S, T &pend)
+void Jacob(vector<int> &S, vector<int> &pend)
 {
-	T tmp_pend;
+	vector<int> tmp_pend;
 	int pend_size = pend.size();
-	// cout << endl << "pend: ";
-	// for (typename T::iterator i = pend.begin(); i != pend.end(); ++i)
-	// 	cout << *i << " ";
-	// cout << endl << "S: ";
-	// for (typename T::iterator i = S.begin(); i != S.end(); ++i)
-	// 	cout << *i << " ";
-	// cout << endl;
 	for (int x = 2; x < pend_size; x++)
 	{
 		int J_num = Jacobsthal(x);
 		if (J_num > pend_size)
 			break;
 		tmp_pend.push_back(pend.at(J_num - 1));
-		typename T::iterator i = lower_bound(S.begin(), S.end(), pend.at(J_num - 1));
+		vector<int>::iterator i = lower_bound(S.begin(), S.end(), pend.at(J_num - 1));
 		S.insert(S.begin() + (i - S.begin()), pend.at(J_num - 1));
 		pend.at(J_num - 1) = -1;
 	}
@@ -161,7 +149,7 @@ void Jacob(T &S, T &pend)
 	{
 		if (pend.at(x) != -1)
 		{
-			typename T::iterator i = lower_bound(S.begin(), S.end(), pend.at(x));
+			vector<int>::iterator i = lower_bound(S.begin(), S.end(), pend.at(x));
 			S.insert(S.begin() + (i - S.begin()), pend.at(x));
 			tmp_pend.push_back(pend.at(x));
 		}
@@ -170,26 +158,69 @@ void Jacob(T &S, T &pend)
 	pend = tmp_pend;
 }
 
-template <typename P, typename C>
-void split_chain(P &p, C &S, C &pend)
+void Jacob(list<int> &S, list<int> &pend)
 {
-	C tmp_pend;
-	for(int i = 0; i < p.size(); i++)
+	list<int> tmp_pend;
+	int pend_size = pend.size();
+	for (int x = 2; x < pend_size; x++)
 	{
-		pend.push_back(p[i].first);
-		S.push_back(p[i].second);
+		int J_num = Jacobsthal(x);
+		if (J_num > pend_size)
+			break;
+		list<int>::iterator i = pend.begin();
+		std::advance(i, J_num - 1);
+		tmp_pend.push_back(*i);
+		list<int>::iterator low;
+		for(low = S.begin(); low != S.end(); ++low)
+			if (*low > *i)
+				break;
+		tmp_pend.insert(low, *i);
+		*i = -1;
+	}
+	for (list<int>::iterator i = pend.begin(); i != pend.end(); ++i)
+	{
+		if (*i != -1)
+		{
+			tmp_pend.push_back(*i);
+			list<int>::iterator low;
+			for(low = S.begin(); low != S.end(); ++low)
+				if (*low > *i)
+					break;
+			tmp_pend.insert(low, *i);
+		}
+	}
+	pend.clear();
+	pend = tmp_pend;
+}
+
+template <typename P, typename L>
+void split_chain(P &p, L &S, L &pend)
+{
+	for(typename P::iterator i = p.begin(); i != p.end(); ++i)
+	{
+		pend.push_back(i->first);
+		S.push_back(i->second);
 	}
 	S.insert(S.begin(), pend.front());
 	if (!pend.empty())	
 	{
 		pend.erase(pend.begin());
 	}
-	Jacob<C>(S, pend);
+	// cout << endl;
+	// cout << "pend: ";
+	// for (typename L::iterator i = pend.begin(); i != pend.end(); ++i)
+	// 	cout << "(" << *i << ")" << " ";
+	// cout << endl;
+	// cout << "S: ";
+	// for (typename L::iterator i = S.begin(); i != S.end(); ++i)
+	// 	cout << "(" << *i << ")" << " ";
+	// cout << endl << endl;
+	Jacob(S, pend);
 }
 
 void PmergeMe::algo()
 {
-	int last, f, s = 0;
+	int last = 0;
 	bool iseven = true;
 	std::pair<int, int> P1;
 	vector< std::pair<int, int> > pairs;
@@ -203,7 +234,7 @@ void PmergeMe::algo()
 		num_arr.pop_back();
 	}
 	pairs = insert<vector< std::pair<int, int> >, vector<int> >(num_arr);
-	insertionSort<vector< std::pair<int, int> > >(pairs, pairs.size());
+	insertionSort(pairs, pairs.size());
 	// for(int i = 0; i < pairs.size(); i++)
 	// {
 	// 	cout << "(" << pairs[i].first << "," << pairs[i].second << ")" << " ";
@@ -224,7 +255,7 @@ void PmergeMe::algo()
 
 void PmergeMe::algo_list()
 {
-	int last, f, s = 0;
+	int last = 0;
 	bool iseven = true;
 	std::pair<int, int> P1;
 	list< std::pair<int, int> > pairs;
@@ -238,24 +269,30 @@ void PmergeMe::algo_list()
 		num_arr_list.pop_back();
 	}
 	pairs = insert<list< std::pair<int, int> >, list<int> >(num_arr_list);
-	insertionSort<list< std::pair<int, int> > >(pairs, pairs.size());
-	// for(int i = 0; i < pairs.size(); i++)
-	// {
-	// 	cout << "(" << pairs[i].first << "," << pairs[i].second << ")" << " ";
-	// }
+	insertionSort(pairs, pairs.size());
+	// for (list< std::pair<int, int> >::iterator i = pairs.begin(); i != pairs.end(); ++i)
+	// 	cout << "(" << i->first << "," << i->second << ")" << " ";
 	// cout << endl;
-	// split_chain<list< std::pair<int, int> >, list<int> >(pairs, large_chain, small_chain);
+	split_chain<list< std::pair<int, int> >, list<int> >(pairs, large_chain, small_chain);
 	if (iseven == false)
 	{
 		list<int>::iterator i = lower_bound(large_chain.begin(), large_chain.end(), last);
 		if (i == large_chain.end())
 			large_chain.push_back(last);
-		// else
-			// large_chain.insert(large_chain.begin() + (i - large_chain.begin()), last);
+		else
+		{
+			list<int>::iterator low;
+			for(low = large_chain.begin(); low != large_chain.end(); ++low)
+				if (*low > last)
+					break;
+			large_chain.insert(low, last);
+		}
 	}
 	num_arr_list.clear();
 	num_arr_list = large_chain;
 }
+
+// bool check_sort( )
 
 PmergeMe::PmergeMe(string &arr)
 {
@@ -263,12 +300,12 @@ PmergeMe::PmergeMe(string &arr)
 	start = timestamp();
 	num_arr = splitToSTL< vector<int> >(arr, ' ');
 	check_dup< vector<int> >(num_arr);
-	cout << "Before :  ";
+	cout << "Vector Before :  ";
 	for (vector<int>::iterator i = num_arr.begin(); i != num_arr.end(); ++i)
 		cout << *i << " ";
 	cout << endl;
 	algo();
-	cout << "After :   ";
+	cout << "Vector After :   ";
 	for (vector<int>::iterator i = num_arr.begin(); i != num_arr.end(); ++i)
 		cout << *i << " ";
 	cout << endl;
@@ -277,25 +314,30 @@ PmergeMe::PmergeMe(string &arr)
 	start_list = timestamp();
 	num_arr_list = splitToSTL< list<int> >(arr, ' ');
 	check_dup< list<int> >(num_arr_list);
-	cout << "Before :  ";
+	cout << "List Before   :  ";
 	for (list<int>::iterator i = num_arr_list.begin(); i != num_arr_list.end(); ++i)
 		cout << *i << " ";
 	cout << endl;
 	algo_list();
-	cout << "After :   ";
+	cout << "List After   :   ";
 	for (list<int>::iterator i = num_arr_list.begin(); i != num_arr_list.end(); ++i)
 		cout << *i << " ";
 	cout << endl;
 	end_list = timestamp();
 
 	cout << "Time to process a range of " << num_arr.size() << " element with std::vector : "<< end - start << " us" << endl;
-	// cout << "Time to process a range of " << num_arr_list.size() << " element with std::list : "<< end_list - start_list << " us" << endl;
-	if (std::is_sorted(num_arr.begin(), num_arr.end()))
-		cout << "Vector is sorted" << endl;
-	else
-		cout << "Vector is not sorted" << endl;
+	cout << "Time to process a range of " << num_arr_list.size() << " element with std::list : "<< end_list - start_list << " us" << endl;
 }
 
 PmergeMe::~PmergeMe()
 {
 }
+
+// if (std::is_sorted(num_arr.begin(), num_arr.end()))
+// 	cout << "Vector is sorted" << endl;
+// else
+// 	cout << "Vector is not sorted" << endl;
+// if (std::is_sorted(num_arr_list.begin(), num_arr_list.end()))
+// 	cout << "List is sorted" << endl;
+// else
+// 	cout << "List is not sorted" << endl;
