@@ -48,4 +48,11 @@ public:
 			return "Error Negative number is found!";
 		}
 	};
+	class Sorted : public std::exception
+	{
+		virtual const char *what() const throw()
+		{
+			return "Array is already sorted!";
+		}
+	};
 };

@@ -292,13 +292,33 @@ void PmergeMe::algo_list()
 	num_arr_list = large_chain;
 }
 
-// bool check_sort( )
+
+template <typename T>
+bool check_sort(T &arr)
+{
+	typename T::iterator it = arr.begin();
+	while (it != arr.end())
+	{
+		int prev = *it;
+		if (++it == arr.end())
+			break;
+		else if (prev > *it)
+			return (false);
+	}
+	
+	return (true);
+}
+
 
 PmergeMe::PmergeMe(string &arr)
 {
 	double start, start_list, end, end_list;
+
+	//vector
 	start = timestamp();
 	num_arr = splitToSTL< vector<int> >(arr, ' ');
+	if (check_sort<vector<int> >(num_arr))
+		throw Sorted();
 	check_dup< vector<int> >(num_arr);
 	cout << "Vector Before :  ";
 	for (vector<int>::iterator i = num_arr.begin(); i != num_arr.end(); ++i)
@@ -311,8 +331,11 @@ PmergeMe::PmergeMe(string &arr)
 	cout << endl;
 	end = timestamp();
 
+	//list
 	start_list = timestamp();
 	num_arr_list = splitToSTL< list<int> >(arr, ' ');
+	if (check_sort<list<int> >(num_arr_list))
+		throw Sorted();
 	check_dup< list<int> >(num_arr_list);
 	cout << "List Before   :  ";
 	for (list<int>::iterator i = num_arr_list.begin(); i != num_arr_list.end(); ++i)
@@ -325,19 +348,20 @@ PmergeMe::PmergeMe(string &arr)
 	cout << endl;
 	end_list = timestamp();
 
+	//end
 	cout << "Time to process a range of " << num_arr.size() << " element with std::vector : "<< end - start << " us" << endl;
 	cout << "Time to process a range of " << num_arr_list.size() << " element with std::list : "<< end_list - start_list << " us" << endl;
+	if (check_sort<vector<int> >(num_arr))
+		cout << "Vector is sorted" << endl;
+	else
+		cout << "Vector is not sorted" << endl;
+	if (check_sort<list<int> >(num_arr_list))
+		cout << "List is sorted" << endl;
+	else
+		cout << "List is not sorted" << endl;
+
 }
 
 PmergeMe::~PmergeMe()
 {
 }
-
-// if (std::is_sorted(num_arr.begin(), num_arr.end()))
-// 	cout << "Vector is sorted" << endl;
-// else
-// 	cout << "Vector is not sorted" << endl;
-// if (std::is_sorted(num_arr_list.begin(), num_arr_list.end()))
-// 	cout << "List is sorted" << endl;
-// else
-// 	cout << "List is not sorted" << endl;

@@ -7,7 +7,7 @@ CFLAGS = -Wall -Wextra -Werror
 all : $(NAME)
 
 $(NAME) : $(SRC)
-	g++ $(SRC) $(CFLAGS) -o $(NAME) -fsanitize=address
+	g++ -std=c++98 $(SRC) $(CFLAGS) -o $(NAME) -fsanitize=address
 
 clean :
 	rm -f *.o
